@@ -11,6 +11,13 @@ typedef enum {
     L9963E_IF_GPIO_PIN_RESET = 0,
     L9963E_IF_GPIO_PIN_SET,
 } L9963E_IF_PinState;
+
+/**
+ * @brief Initialize I/O interfaces
+ * 
+ * @return L9963E status (L9963E_OK on success, L9963E_ERROR on failure).
+ */
+typedef L9963E_StatusTypeDef (*L9963E_IF_Init)(void);
 /**
  * @brief Reads the value of a GPIO pin.
  * 
@@ -57,6 +64,7 @@ typedef uint32_t (*L9963E_IF_GetTickMs_Ptr)(void);
 typedef void (*L9963E_IF_DelayMs_Ptr)(uint32_t delay);
 
 struct L9963E_IfStruct {
+    L9963E_IF_Init L9963E_IF_Init;
     L9963E_IF_GPIO_ReadPin_Ptr L9963E_IF_GPIO_ReadPin;
     L9963E_IF_GPIO_WritePin_Ptr L9963E_IF_GPIO_WritePin;
     L9963E_IF_SPI_Receive_Ptr L9963E_IF_SPI_Receive;

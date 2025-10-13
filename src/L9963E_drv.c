@@ -90,6 +90,9 @@ L9963E_StatusTypeDef L9963E_DRV_init(L9963E_DRV_HandleTypeDef *handle, L9963E_If
 
     handle->interface = interface;
 
+    if (handle->interface.L9963E_IF_Init)
+	    handle->interface.L9963E_IF_Init();
+
     L9963E_DRV_CS_HIGH(handle);
     L9963E_DRV_TXEN_HIGH(handle);
     L9963E_DRV_ISOFREQ_LOW(handle);
