@@ -4,26 +4,26 @@
 #include "stm32_if.h"
 
 static L9963E_IF_PinState GPIO_ReadPin(L9963E_IF_PINS pin) {
-    L9963E_IF_PinState state = L9963E_IF_GPIO_PIN_RESET;
+    GPIO_PinState stm_state;
     switch (pin) {
         case L9963E_IF_CS:
-            state = HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin);
+            stm_state = HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin);
             break;
         case L9963E_IF_TXEN:
-            state = HAL_GPIO_ReadPin(TXEN_GPIO_Port, TXEN_Pin);
+            stm_state = HAL_GPIO_ReadPin(TXEN_GPIO_Port, TXEN_Pin);
             break;
         case L9963E_IF_BNE:
-            state = HAL_GPIO_ReadPin(BNE_GPIO_Port, BNE_Pin);
+            stm_state = HAL_GPIO_ReadPin(BNE_GPIO_Port, BNE_Pin);
             break;
         case L9963E_IF_ISOFREQ:
-            state = HAL_GPIO_ReadPin(ISOFREQ_GPIO_Port, ISOFREQ_Pin);
+            stm_state = HAL_GPIO_ReadPin(ISOFREQ_GPIO_Port, ISOFREQ_Pin);
             break;
         case L9963E_IF_DIS:
-            state = HAL_GPIO_ReadPin(DIS_GPIO_Port, DIS_Pin);
+            stm_state = HAL_GPIO_ReadPin(DIS_GPIO_Port, DIS_Pin);
             break;
     }
 
-    return state == L9963E_IF_GPIO_PIN_RESET ? GPIO_PIN_RESET : GPIO_PIN_SET;  //convert lib state to stm state
+    return stm_state == GPIO_PIN_RESET ? L9963E_IF_GPIO_PIN_RESET : L9963E_IF_GPIO_PIN_SET;  //convert lib state to stm state
 }
 static L9963E_StatusTypeDef GPIO_WritePin(L9963E_IF_PINS pin, L9963E_IF_PinState state) {
     GPIO_PinState stm_state = state == L9963E_IF_GPIO_PIN_RESET ? GPIO_PIN_RESET
